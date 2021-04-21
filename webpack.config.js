@@ -23,12 +23,18 @@ const rules = [
         test: /\.js$/,
         include: [JS_DIR],
         exclude: /node_modules/,
-        use: 'babel-loader'
+        use:{
+            loader:'babel-loader',
+            options:{
+                presets:['@babel/preset-env'],
+                plugins:['@babel/plugin-proposal-class-properties']
+            }
+        }
     },
     {
         test: /\.s[ac]ss$/i,
         exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader','sass-loader']
     },
     {
         test: /\.(png|jpg|svg|jpeg|gif|ico)$/,
