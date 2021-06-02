@@ -1,4 +1,12 @@
-html{
-    font-size: 62.5%;
-    background-color: #000;
-}
+//lib 
+@import "libs/normalize";
+@import "libs/reset";
+
+//setting
+@import "setting/variable";
+@import "setting/typography";
+
+//structure
+@import "components/_components-dir";
+@import "elements/_elements-dir";
+@import "objects/_objects-dir";

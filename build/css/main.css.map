@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://webpackforfrontend/./src/scss/main.scss"],"names":[],"mappings":"AAAA;EACI;EACA;AACJ,C","file":"css/main.css","sourcesContent":["html{\r\n    font-size: 62.5%;\r\n    background-color: #000;\r\n}"],"sourceRoot":""}

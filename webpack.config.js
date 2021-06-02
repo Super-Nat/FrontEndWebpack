@@ -4,6 +4,9 @@ const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require("cssnano");
 const UgliFyJsPlugin = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require('webpack');
 
 const JS_DIR = path.resolve(__dirname,'src/js');
 const IMG_DIR = path.resolve(__dirname,'src/images');
@@ -17,6 +20,7 @@ const output = {
     path: BUILD_DIR,
     filename: 'js/[name].js'
 };
+
 
 const rules = [
     {
@@ -47,7 +51,19 @@ const rules = [
                 }
             }
         ]
-    }
+    },
+    {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+          }
+        ]
+      }
 ];
 
 const plugins = (argv) => {
@@ -58,6 +74,20 @@ const plugins = (argv) => {
         }),
         new MiniCssExtractPlugin({
             filename : 'css/[name].css'
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'src/html/index.html',
+            minify: false
+        }),
+        new CopyPlugin({
+            patterns: [
+              { from: "src/images", to: "images/" },
+            ],
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
         })
     ]
 }
@@ -65,6 +95,7 @@ const plugins = (argv) => {
 module.exports = (env,argv) => ({
     entry: entry,
     output: output,
+    target: "web",
     devtool: 'source-map',
     plugins: plugins(argv),
     module: {
